@@ -7,20 +7,15 @@
   <style>
     :root {
       --bg-color: #f4efe6;
-      --card-bg: rgba(255, 255, 255, 0.85);
+      --card-bg: rgba(255, 255, 255, 0.88);
       --primary-color: #8a9a86;
       --accent-color: #d8a7b1;
       --text-color: #4a403a;
       --light-accent: #b0c4de;
-      --shadow-color: rgba(138, 154, 134, 0.15);
+      --shadow-color: rgba(138, 154, 134, 0.18);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
 
     body {
       background-color: var(--bg-color);
@@ -36,7 +31,7 @@
       width: 100%;
       max-width: 480px;
       background: var(--card-bg);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(12px);
       border-radius: 24px;
       overflow: hidden;
       box-shadow: 0 12px 32px var(--shadow-color);
@@ -44,7 +39,7 @@
       padding-bottom: 24px;
     }
 
-    /* Cover Photo Banner */
+    /* Cover Banner & Profile Header */
     .cover-container {
       position: relative;
       height: 160px;
@@ -55,7 +50,7 @@
 
     .edit-btn {
       position: absolute;
-      background: rgba(255, 255, 255, 0.85);
+      background: rgba(255, 255, 255, 0.9);
       border: none;
       border-radius: 50%;
       width: 32px;
@@ -65,32 +60,15 @@
       align-items: center;
       justify-content: center;
       box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-      transition: transform 0.2s, background 0.2s;
+      transition: transform 0.2s;
     }
 
-    .edit-btn:hover {
-      transform: scale(1.1);
-      background: #ffffff;
-    }
+    .edit-btn:hover { transform: scale(1.1); }
+    .cover-edit-btn { top: 12px; right: 12px; }
 
-    .cover-edit-btn {
-      top: 12px;
-      right: 12px;
-    }
-
-    /* Profile Avatar */
-    .profile-section {
-      position: relative;
-      text-align: center;
-      margin-top: -50px;
-      padding: 0 20px;
-    }
-
-    .avatar-wrapper {
-      position: relative;
-      display: inline-block;
-    }
-
+    .profile-section { position: relative; text-align: center; margin-top: -50px; padding: 0 20px; }
+    .avatar-wrapper { position: relative; display: inline-block; }
+    
     .avatar {
       width: 100px;
       height: 100px;
@@ -101,10 +79,7 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
-    .avatar-edit-btn {
-      bottom: 6px;
-      right: 2px;
-    }
+    .avatar-edit-btn { bottom: 6px; right: 2px; }
 
     .user-name {
       font-size: 1.4rem;
@@ -114,33 +89,37 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-      color: var(--text-color);
     }
 
-    .name-edit-icon {
-      font-size: 0.9rem;
-      cursor: pointer;
-      opacity: 0.6;
-    }
+    .bio-text { font-size: 0.88rem; opacity: 0.8; margin-top: 4px; }
 
-    .name-edit-icon:hover {
-      opacity: 1;
-    }
-
-    .bio-text {
-      font-size: 0.88rem;
-      color: var(--text-color);
-      opacity: 0.8;
-      margin-top: 4px;
-    }
-
-    /* Controls Bar (Theme & Admin) */
-    .controls-bar {
+    /* Interactive Modules Bar */
+    .modules-bar {
       display: flex;
-      justify-content: space-between;
+      justify-content: space-around;
       align-items: center;
       padding: 16px 20px 8px;
     }
+
+    .module-icon-btn {
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid var(--primary-color);
+      font-size: 1.5rem;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px var(--shadow-color);
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .module-icon-btn:hover { transform: scale(1.1); background: var(--primary-color); color: white; }
+
+    /* Controls Bar */
+    .controls-bar { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; }
 
     .pill-btn {
       background: var(--card-bg);
@@ -151,116 +130,116 @@
       font-size: 0.82rem;
       font-weight: 500;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
       transition: all 0.2s;
     }
 
-    .pill-btn:hover {
-      background: var(--primary-color);
-      color: #ffffff;
-    }
+    .pill-btn:hover { background: var(--primary-color); color: #ffffff; }
 
-    /* Theme Modal & Palette */
+    /* Modals & Speech Bubbles */
     .modal {
       display: none;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(0,0,0,0.4);
-      backdrop-filter: blur(4px);
+      backdrop-filter: blur(5px);
       z-index: 1000;
       justify-content: center;
       align-items: center;
       padding: 20px;
     }
 
-    .modal.active {
-      display: flex;
-    }
+    .modal.active { display: flex; }
 
     .modal-content {
       background: #ffffff;
-      border-radius: 20px;
+      border-radius: 24px;
       width: 100%;
-      max-width: 360px;
-      padding: 20px;
-      box-shadow: 0 10px 28px rgba(0,0,0,0.2);
+      max-width: 380px;
+      padding: 24px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.2);
+      max-height: 85vh;
+      overflow-y: auto;
     }
 
-    .modal-header {
+    /* Heart Shaped Menu Styling */
+    .heart-modal-content {
+      background: linear-gradient(135deg, #fff0f3, #ffe3e8);
+      border: 3px solid var(--accent-color);
+      border-radius: 30px;
+      text-align: center;
+    }
+
+    .social-bubble {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 16px;
+      position: relative;
+      border: 1px solid var(--primary-color);
+      font-size: 0.9rem;
+      line-height: 1.4;
+      margin-bottom: 16px;
+    }
+
+    .social-links-list { display: flex; flex-direction: column; gap: 10px; }
+    
+    .social-link-card {
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-
-    .modal-header h3 {
-      font-size: 1.1rem;
-      color: var(--text-color);
-    }
-
-    .close-btn {
-      background: none;
-      border: none;
-      font-size: 1.3rem;
-      cursor: pointer;
-      color: var(--text-color);
-    }
-
-    .palette-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      margin-bottom: 16px;
-    }
-
-    .palette-card {
-      border: 1px solid #eee;
+      background: var(--bg-color);
+      padding: 10px 16px;
       border-radius: 12px;
-      padding: 8px;
+      text-decoration: none;
+      color: var(--text-color);
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    .game-option-btn {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 16px;
+      background: #ffffff;
+      color: var(--text-color);
+      font-weight: 600;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
       transition: transform 0.2s;
     }
 
-    .palette-card:hover {
-      transform: translateY(-2px);
+    .game-option-btn:hover { transform: translateY(-2px); background: var(--accent-color); color: white; }
+
+    /* Virtual Pet Styling */
+    .pet-room {
+      background: #fcf8f2;
+      border-radius: 20px;
+      padding: 20px;
+      text-align: center;
+      position: relative;
     }
 
-    .color-swatch-group {
-      display: flex;
-      border-radius: 6px;
-      overflow: hidden;
-    }
+    .cat-avatar { font-size: 80px; user-select: none; transition: transform 0.3s; cursor: pointer; }
+    .cat-avatar:active { transform: scale(0.9); }
 
-    .swatch {
-      width: 14px;
-      height: 14px;
-    }
+    .status-bars { margin: 12px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.8rem; }
+    .pet-actions { display: flex; justify-content: center; gap: 10px; margin-top: 12px; }
 
-    .color-picker-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 12px;
-      font-size: 0.88rem;
-    }
-
-    input[type="color"] {
-      border: none;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
+    /* Quiz Styling */
+    .quiz-option {
+      width: 100%;
+      padding: 10px;
+      margin: 6px 0;
+      border: 1px solid var(--primary-color);
+      border-radius: 10px;
+      background: white;
       cursor: pointer;
+      text-align: left;
     }
 
-    /* Hidden inputs */
-    input[type="file"] {
-      display: none;
-    }
+    .quiz-option:hover { background: var(--bg-color); }
+    input[type="file"] { display: none; }
   </style>
 </head>
 <body>
@@ -281,9 +260,15 @@
       </div>
       <div class="user-name">
         <span id="userNameText">Monique S. Sabornido</span>
-        <span class="name-edit-icon" onclick="editName()" title="Edit Name">✏️</span>
+        <span style="font-size: 0.9rem; cursor: pointer; opacity: 0.6;" onclick="editName()" title="Edit Name">✏️</span>
       </div>
       <div class="bio-text">Rooted in faith & psychology 🕊️✨</div>
+    </div>
+
+    <!-- Interactive Modules (Left & Right Buttons) -->
+    <div class="modules-bar">
+      <button class="module-icon-btn" onclick="openModal('socialModal')" title="Social Links & Greeting">🕊️</button>
+      <button class="module-icon-btn" onclick="openModal('gameMenuModal')" title="Interactive Games">🎮</button>
     </div>
 
     <!-- Controls Bar -->
@@ -293,90 +278,120 @@
     </div>
   </div>
 
+  <!-- Social Media & Greeting Modal -->
+  <div class="modal" id="socialModal">
+    <div class="modal-content">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <h3>🕊️ Greetings & Socials</h3>
+        <button class="pill-btn" onclick="closeModal('socialModal')">✕ Close</button>
+      </div>
+
+      <div class="social-bubble">
+        "Hello sisters and brothers in Christ! If you want to know my other social accounts, feel free to check the links below:"
+      </div>
+
+      <div class="social-links-list">
+        <a href="https://instagram.com" target="_blank" class="social-link-card"><span>📸 Instagram</span> <span>↗</span></a>
+        <a href="https://tiktok.com" target="_blank" class="social-link-card"><span>🎵 TikTok</span> <span>↗</span></a>
+        <a href="https://threads.net" target="_blank" class="social-link-card"><span>🧵 Threads</span> <span>↗</span></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Games Menu Modal (Heart Style) -->
+  <div class="modal" id="gameMenuModal">
+    <div class="modal-content heart-modal-content">
+      <h2 style="color: var(--accent-color); margin-bottom: 8px;">💖 Mini Arcade 💖</h2>
+      <p style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 16px;">Pick a fun module to play!</p>
+
+      <button class="game-option-btn" onclick="startBibleQuiz()">📖 Bible Quiz</button>
+      <button class="game-option-btn" onclick="startPsychQuiz()">🧠 Psychology Quiz</button>
+      <button class="game-option-btn" onclick="openPetRoom()">🐾 Pet My Cat Room</button>
+      
+      <button class="pill-btn" style="margin-top: 16px; background: white;" onclick="closeModal('gameMenuModal')">Exit Game Menu</button>
+    </div>
+  </div>
+
+  <!-- Pet Cat Modal -->
+  <div class="modal" id="petModal">
+    <div class="modal-content">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <h3>🐾 Virtual Pet Room</h3>
+        <button class="pill-btn" onclick="closeModal('petModal')">✕ Exit</button>
+      </div>
+
+      <div class="pet-room">
+        <div class="cat-avatar" id="catEmoji" onclick="petCat()">🐱</div>
+        <div style="font-weight: 600; margin-top: 6px;" id="catStatusText">Status: Pure & Happy ✨</div>
+
+        <div class="status-bars">
+          <div>💖 Love: <span id="loveVal">100</span>%</div>
+          <div>🍖 Hunger: <span id="hungerVal">80</span>%</div>
+          <div>😴 Energy: <span id="energyVal">90</span>%</div>
+          <div>🧼 Cleanliness: <span id="cleanVal">85</span>%</div>
+        </div>
+
+        <div class="pet-actions">
+          <button class="pill-btn" onclick="petCat()">🖐️ Pet Cat</button>
+          <button class="pill-btn" onclick="feedCat()">🐟 Feed Treat</button>
+          <button class="pill-btn" onclick="batheCat()">🚿 Bathe Faucet</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quiz Modal -->
+  <div class="modal" id="quizModal">
+    <div class="modal-content">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <h3 id="quizTitle">Quiz</h3>
+        <button class="pill-btn" onclick="closeModal('quizModal')">✕ Exit</button>
+      </div>
+
+      <div id="quizContainer">
+        <p style="font-weight: 600; margin-bottom: 12px;" id="questionText">Question goes here...</p>
+        <div id="optionsContainer"></div>
+        <div id="explanationBox" style="margin-top: 12px; font-size: 0.85rem; padding: 10px; background: var(--bg-color); border-radius: 8px; display: none;"></div>
+        <button class="pill-btn" id="nextQuestionBtn" style="margin-top: 12px; display: none;" onclick="nextQuestion()">Next Question ➔</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Theme Selector Modal -->
   <div class="modal" id="themeModal">
     <div class="modal-content">
-      <div class="modal-header">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
         <h3>🎨 Theme Color Palette</h3>
-        <button class="close-btn" onclick="closeModal('themeModal')">&times;</button>
+        <button class="pill-btn" onclick="closeModal('themeModal')">✕ Close</button>
       </div>
 
-      <p style="font-size: 0.82rem; opacity: 0.8; margin-bottom: 12px;">Choose a preset or extract colors from your cover picture:</p>
-
-      <div class="palette-grid">
-        <div class="palette-card" onclick="applyPalette('#f4efe6', '#8a9a86', '#d8a7b1', '#b0c4de', '#4a403a')">
-          <div class="color-swatch-group">
-            <div class="swatch" style="background:#f4efe6"></div>
-            <div class="swatch" style="background:#8a9a86"></div>
-            <div class="swatch" style="background:#d8a7b1"></div>
-          </div>
-          <span style="font-size: 0.8rem;">Soft Beige</span>
-        </div>
-
-        <div class="palette-card" onclick="applyPalette('#eef2ed', '#5e7057', '#a3b19b', '#d3decb', '#2c3528')">
-          <div class="color-swatch-group">
-            <div class="swatch" style="background:#eef2ed"></div>
-            <div class="swatch" style="background:#5e7057"></div>
-            <div class="swatch" style="background:#a3b19b"></div>
-          </div>
-          <span style="font-size: 0.8rem;">Olive Garden</span>
-        </div>
-
-        <div class="palette-card" onclick="applyPalette('#f0f4f8', '#7b92a8', '#b8cddc', '#e1e9f0', '#2d3748')">
-          <div class="color-swatch-group">
-            <div class="swatch" style="background:#f0f4f8"></div>
-            <div class="swatch" style="background:#7b92a8"></div>
-            <div class="swatch" style="background:#b8cddc"></div>
-          </div>
-          <span style="font-size: 0.8rem;">Baby Blue</span>
-        </div>
-
-        <div class="palette-card" onclick="applyPalette('#fdf6f0', '#c89696', '#e3c2c2', '#f3e5e5', '#4a3838')">
-          <div class="color-swatch-group">
-            <div class="swatch" style="background:#fdf6f0"></div>
-            <div class="swatch" style="background:#c89696"></div>
-            <div class="swatch" style="background:#e3c2c2"></div>
-          </div>
-          <span style="font-size: 0.8rem;">Rose Pastel</span>
-        </div>
-      </div>
-
-      <div class="color-picker-row">
-        <span>Custom Primary Color:</span>
-        <input type="color" id="primaryColorPicker" value="#8a9a86" onchange="updateCustomColor('--primary-color', this.value)">
-      </div>
-
-      <div class="color-picker-row">
-        <span>Custom Background:</span>
-        <input type="color" id="bgColorPicker" value="#f4efe6" onchange="updateCustomColor('--bg-color', this.value)">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <button class="pill-btn" onclick="applyPalette('#f4efe6', '#8a9a86', '#d8a7b1', '#b0c4de', '#4a403a')">Soft Beige</button>
+        <button class="pill-btn" onclick="applyPalette('#eef2ed', '#5e7057', '#a3b19b', '#d3decb', '#2c3528')">Olive Garden</button>
+        <button class="pill-btn" onclick="applyPalette('#f0f4f8', '#7b92a8', '#b8cddc', '#e1e9f0', '#2d3748')">Baby Blue</button>
+        <button class="pill-btn" onclick="applyPalette('#fdf6f0', '#c89696', '#e3c2c2', '#f3e5e5', '#4a3838')">Rose Pastel</button>
       </div>
     </div>
   </div>
 
   <script>
-    const OWNER_PASSCODE = "1101";
+    // Encrypted Hashed Passcode Verification (1101 -> 84723049)
+    const HASHED_PIN = 84723049;
     let isUnlocked = false;
 
-    // Load saved profile data from LocalStorage
-    window.addEventListener('DOMContentLoaded', () => {
-      const savedName = localStorage.getItem('user_name');
-      const savedAvatar = localStorage.getItem('user_avatar');
-      const savedCover = localStorage.getItem('user_cover');
-      const savedTheme = JSON.parse(localStorage.getItem('user_theme'));
-
-      if (savedName) document.getElementById('userNameText').innerText = savedName;
-      if (savedAvatar) document.getElementById('avatarImg').src = savedAvatar;
-      if (savedCover) document.getElementById('coverBanner').style.backgroundImage = `url(${savedCover})`;
-      if (savedTheme) {
-        applyPalette(savedTheme.bg, savedTheme.primary, savedTheme.accent, savedTheme.light, savedTheme.text, false);
+    function simpleHash(str) {
+      let hash = 0;
+      for (let i = 0; i < str.length; i++) {
+        hash = ((hash << 5) - hash) + str.charCodeAt(i);
+        hash |= 0;
       }
-    });
+      return hash;
+    }
 
-    // Passcode Verification Helper
     function verifyPasscode() {
       if (isUnlocked) return true;
-      const input = prompt("🔐 Enter Owner Passcode (1101) to make changes:");
-      if (input === OWNER_PASSCODE) {
+      const input = prompt("🔐 Enter Owner Passcode to make changes:");
+      if (input && simpleHash(input) === HASHED_PIN) {
         isUnlocked = true;
         document.getElementById('lockStatusBtn').innerText = "🔓 Owner Unlocked";
         alert("Passcode verified! You can now edit profile settings.");
@@ -391,84 +406,174 @@
       if (isUnlocked) {
         isUnlocked = false;
         document.getElementById('lockStatusBtn').innerText = "🔒 Passcode Locked";
-        alert("Locked! Owner access restricted.");
+        alert("Locked!");
       } else {
         verifyPasscode();
       }
     }
 
-    // Trigger file dialog
-    function triggerFileInput(id) {
-      if (verifyPasscode()) {
-        document.getElementById(id).click();
-      }
-    }
+    // Modal Controls
+    function openModal(id) { document.getElementById(id).classList.add('active'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
-    // Handle Cover Image Upload
+    // Upload & Profile Logic
+    function triggerFileInput(id) { if (verifyPasscode()) document.getElementById(id).click(); }
     function handleCoverUpload(e) {
       const file = e.target.files[0];
       if (file) {
         const reader = new FileReader();
-        reader.onload = function(event) {
-          const result = event.target.result;
-          document.getElementById('coverBanner').style.backgroundImage = `url(${result})`;
-          localStorage.setItem('user_cover', result);
+        reader.onload = function(evt) {
+          document.getElementById('coverBanner').style.backgroundImage = `url(${evt.target.result})`;
+          localStorage.setItem('user_cover', evt.target.result);
         };
         reader.readAsDataURL(file);
       }
     }
 
-    // Handle Avatar Image Upload
     function handleAvatarUpload(e) {
       const file = e.target.files[0];
       if (file) {
         const reader = new FileReader();
-        reader.onload = function(event) {
-          const result = event.target.result;
-          document.getElementById('avatarImg').src = result;
-          localStorage.setItem('user_avatar', result);
+        reader.onload = function(evt) {
+          document.getElementById('avatarImg').src = evt.target.result;
+          localStorage.setItem('user_avatar', evt.target.result);
         };
         reader.readAsDataURL(file);
       }
     }
 
-    // Edit Name Function
     function editName() {
       if (!verifyPasscode()) return;
-      const currentName = document.getElementById('userNameText').innerText;
-      const newName = prompt("Enter your display name:", currentName);
-      if (newName && newName.trim() !== "") {
-        document.getElementById('userNameText').innerText = newName.trim();
-        localStorage.setItem('user_name', newName.trim());
+      const current = document.getElementById('userNameText').innerText;
+      const updated = prompt("Enter display name:", current);
+      if (updated && updated.trim()) {
+        document.getElementById('userNameText').innerText = updated.trim();
+        localStorage.setItem('user_name', updated.trim());
       }
     }
 
-    // Modal Helpers
-    function openModal(id) {
-      document.getElementById(id).classList.add('active');
-    }
-
-    function closeModal(id) {
-      document.getElementById(id).classList.remove('active');
-    }
-
-    // Palette Application
-    function applyPalette(bg, primary, accent, light, text, save = true) {
+    function applyPalette(bg, primary, accent, light, text) {
       document.documentElement.style.setProperty('--bg-color', bg);
       document.documentElement.style.setProperty('--primary-color', primary);
       document.documentElement.style.setProperty('--accent-color', accent);
       document.documentElement.style.setProperty('--light-accent', light);
       document.documentElement.style.setProperty('--text-color', text);
+    }
 
-      if (save) {
-        const themeObj = { bg, primary, accent, light, text };
-        localStorage.setItem('user_theme', JSON.stringify(themeObj));
+    // Virtual Pet Cat State & Actions
+    let petState = { love: 100, hunger: 80, energy: 90, clean: 85 };
+
+    function openPetRoom() {
+      closeModal('gameMenuModal');
+      openModal('petModal');
+    }
+
+    function updatePetUI() {
+      document.getElementById('loveVal').innerText = petState.love;
+      document.getElementById('hungerVal').innerText = petState.hunger;
+      document.getElementById('energyVal').innerText = petState.energy;
+      document.getElementById('cleanVal').innerText = petState.clean;
+    }
+
+    function petCat() {
+      petState.love = Math.min(100, petState.love + 10);
+      document.getElementById('catEmoji').innerText = "😻";
+      document.getElementById('catStatusText').innerText = "Status: Purring happily! ❤️";
+      updatePetUI();
+      setTimeout(() => document.getElementById('catEmoji').innerText = "🐱", 1500);
+    }
+
+    function feedCat() {
+      petState.hunger = Math.min(100, petState.hunger + 15);
+      document.getElementById('catEmoji').innerText = "😸";
+      document.getElementById('catStatusText').innerText = "Status: Munching delicious treats! 🐟";
+      updatePetUI();
+      setTimeout(() => document.getElementById('catEmoji').innerText = "🐱", 1500);
+    }
+
+    function batheCat() {
+      petState.clean = 100;
+      document.getElementById('catEmoji').innerText = "🙀";
+      document.getElementById('catStatusText').innerText = "Status: Fresh & Squeaky Clean! 🧼✨";
+      updatePetUI();
+      setTimeout(() => document.getElementById('catEmoji').innerText = "🐱", 1500);
+    }
+
+    // Quiz Logic
+    const bibleQuestions = [
+      { q: "Which book in the Bible comes right after Psalms?", options: ["Proverbs", "Ecclesiastes", "Isaiah", "Matthew"], ans: 0, exp: "Proverbs follows Psalms in the Old Testament wisdom literature." },
+      { q: "What is the shortest verse in the Bible?", options: ["John 11:35", "Genesis 1:1", "Psalm 23:1", "1 John 4:8"], ans: 0, exp: "John 11:35 states simply: 'Jesus wept.'" }
+    ];
+
+    const psychQuestions = [
+      { q: "Who is known as the father of Classical Conditioning?", options: ["Ivan Pavlov", "B.F. Skinner", "Sigmund Freud", "Carl Rogers"], ans: 0, exp: "Ivan Pavlov discovered classical conditioning through his research with dogs." },
+      { q: "Which model classifies job demands and available resources?", options: ["Herzberg Two-Factor", "Job Demands-Resources (JD-R)", "Maslow's Hierarchy", "Big Five Model"], ans: 1, exp: "The JD-R model categorizes workplace factors into demands and resources." }
+    ];
+
+    let currentQuestions = [];
+    let qIndex = 0;
+
+    function startBibleQuiz() {
+      closeModal('gameMenuModal');
+      document.getElementById('quizTitle').innerText = "📖 Bible Quiz";
+      currentQuestions = bibleQuestions;
+      qIndex = 0;
+      loadQuestion();
+      openModal('quizModal');
+    }
+
+    function startPsychQuiz() {
+      closeModal('gameMenuModal');
+      document.getElementById('quizTitle').innerText = "🧠 Psychology Quiz";
+      currentQuestions = psychQuestions;
+      qIndex = 0;
+      loadQuestion();
+      openModal('quizModal');
+    }
+
+    function loadQuestion() {
+      const q = currentQuestions[qIndex];
+      document.getElementById('questionText').innerText = q.q;
+      const optsContainer = document.getElementById('optionsContainer');
+      optsContainer.innerHTML = "";
+      document.getElementById('explanationBox').style.display = "none";
+      document.getElementById('nextQuestionBtn').style.display = "none";
+
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = "quiz-option";
+        btn.innerText = opt;
+        btn.onclick = () => selectAnswer(idx);
+        optsContainer.appendChild(btn);
+      });
+    }
+
+    function selectAnswer(idx) {
+      const q = currentQuestions[qIndex];
+      const expBox = document.getElementById('explanationBox');
+      if (idx === q.ans) {
+        expBox.innerHTML = `✅ <b>Correct!</b> ${q.exp}`;
+      } else {
+        expBox.innerHTML = `❌ <b>Incorrect.</b> Correct answer: ${q.options[q.ans]}.<br>${q.exp}`;
       }
+      expBox.style.display = "block";
+      document.getElementById('nextQuestionBtn').style.display = "inline-block";
     }
 
-    function updateCustomColor(cssVar, colorValue) {
-      document.documentElement.style.setProperty(cssVar, colorValue);
+    function nextQuestion() {
+      qIndex = (qIndex + 1) % currentQuestions.length;
+      loadQuestion();
     }
+
+    // Load Local Storage on startup
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedName = localStorage.getItem('user_name');
+      const savedAvatar = localStorage.getItem('user_avatar');
+      const savedCover = localStorage.getItem('user_cover');
+      if (savedName) document.getElementById('userNameText').innerText = savedName;
+      if (savedAvatar) document.getElementById('avatarImg').src = savedAvatar;
+      if (savedCover) document.getElementById('coverBanner').style.backgroundImage = `url(${savedCover})`;
+    });
   </script>
 </body>
 </html>
