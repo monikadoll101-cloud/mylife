@@ -7,12 +7,12 @@
   <style>
     :root {
       --bg-color: #f4efe6;
-      --card-bg: rgba(255, 255, 255, 0.88);
+      --card-bg: rgba(255, 255, 255, 0.9);
       --primary-color: #8a9a86;
       --accent-color: #d8a7b1;
       --text-color: #4a403a;
       --light-accent: #b0c4de;
-      --shadow-color: rgba(138, 154, 134, 0.18);
+      --shadow-color: rgba(138, 154, 134, 0.2);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
@@ -32,17 +32,18 @@
       max-width: 480px;
       background: var(--card-bg);
       backdrop-filter: blur(12px);
-      border-radius: 24px;
+      border-radius: 28px;
       overflow: hidden;
-      box-shadow: 0 12px 32px var(--shadow-color);
-      border: 1px solid rgba(255, 255, 255, 0.6);
-      padding-bottom: 24px;
+      box-shadow: 0 16px 40px var(--shadow-color);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      padding-bottom: 30px;
+      position: relative;
     }
 
     /* Cover Banner & Profile Header */
     .cover-container {
       position: relative;
-      height: 160px;
+      height: 170px;
       background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
       background-size: cover;
       background-position: center;
@@ -50,40 +51,41 @@
 
     .edit-btn {
       position: absolute;
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.95);
       border: none;
       border-radius: 50%;
-      width: 32px;
-      height: 32px;
+      width: 34px;
+      height: 34px;
       cursor: pointer;
-      display: flex;
+      display: none; /* Hidden until unlocked */
       align-items: center;
       justify-content: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
       transition: transform 0.2s;
+      z-index: 10;
     }
 
     .edit-btn:hover { transform: scale(1.1); }
-    .cover-edit-btn { top: 12px; right: 12px; }
+    .cover-edit-btn { top: 14px; right: 14px; }
 
-    .profile-section { position: relative; text-align: center; margin-top: -50px; padding: 0 20px; }
+    .profile-section { position: relative; text-align: center; margin-top: -55px; padding: 0 20px; }
     .avatar-wrapper { position: relative; display: inline-block; }
     
     .avatar {
-      width: 100px;
-      height: 100px;
+      width: 110px;
+      height: 110px;
       border-radius: 50%;
       border: 4px solid #ffffff;
       object-fit: cover;
       background: var(--light-accent);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
     }
 
-    .avatar-edit-btn { bottom: 6px; right: 2px; }
+    .avatar-edit-btn { bottom: 6px; right: 4px; }
 
     .user-name {
-      font-size: 1.4rem;
-      font-weight: 600;
+      font-size: 1.45rem;
+      font-weight: 700;
       margin-top: 10px;
       display: flex;
       align-items: center;
@@ -91,57 +93,115 @@
       gap: 6px;
     }
 
-    .bio-text { font-size: 0.88rem; opacity: 0.8; margin-top: 4px; }
+    .name-edit-icon { font-size: 0.9rem; cursor: pointer; display: none; opacity: 0.7; }
+    .name-edit-icon:hover { opacity: 1; }
 
-    /* Interactive Modules Bar */
+    .bio-text { font-size: 0.9rem; opacity: 0.85; margin-top: 4px; font-weight: 500; }
+
+    /* 3D Centered Main Action Buttons (Matching Reference) */
     .modules-bar {
       display: flex;
-      justify-content: space-around;
-      align-items: center;
-      padding: 16px 20px 8px;
+      justify-content: center;
+      gap: 28px;
+      margin: 24px 20px 10px;
     }
 
-    .module-icon-btn {
-      background: rgba(255, 255, 255, 0.8);
-      border: 1px solid var(--primary-color);
-      font-size: 1.5rem;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
+    .icon-card-btn {
+      background: none;
+      border: none;
       cursor: pointer;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.25s ease;
+    }
+
+    .icon-card-btn:hover { transform: translateY(-4px); }
+
+    .icon-3d-wrapper {
+      width: 85px;
+      height: 75px;
+      border-radius: 22px;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 12px var(--shadow-color);
+      box-shadow: 0 10px 22px rgba(0,0,0,0.12), inset 0 2px 4px rgba(255,255,255,0.8), inset 0 -4px 8px rgba(0,0,0,0.08);
+      position: relative;
+      margin-bottom: 8px;
+    }
+
+    .chat-3d-bg { background: linear-gradient(135deg, #a8d5ba, #7fb791); }
+    .game-3d-bg { background: linear-gradient(135deg, #f8c8d8, #e8a2b8); }
+
+    .icon-card-btn span {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-color);
+    }
+
+    /* Standard Links List */
+    .links-section {
+      padding: 0 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .link-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+      padding: 14px 20px;
+      border-radius: 16px;
+      text-decoration: none;
+      color: var(--text-color);
+      font-weight: 600;
+      font-size: 0.92rem;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+      border: 1px solid rgba(0,0,0,0.04);
       transition: transform 0.2s, background 0.2s;
     }
 
-    .module-icon-btn:hover { transform: scale(1.1); background: var(--primary-color); color: white; }
+    .link-item:hover { transform: translateY(-2px); background: #fafafa; }
 
-    /* Controls Bar */
-    .controls-bar { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; }
+    /* Controls Bar (Owner Theme & Lock) */
+    .controls-bar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      padding: 20px 20px 10px;
+      margin-top: 10px;
+      border-top: 1px solid rgba(0,0,0,0.06);
+    }
 
     .pill-btn {
       background: var(--card-bg);
       border: 1px solid var(--primary-color);
       color: var(--text-color);
-      padding: 6px 14px;
+      padding: 8px 16px;
       border-radius: 20px;
-      font-size: 0.82rem;
-      font-weight: 500;
+      font-size: 0.85rem;
+      font-weight: 600;
       cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
       transition: all 0.2s;
     }
 
     .pill-btn:hover { background: var(--primary-color); color: #ffffff; }
+    
+    #themeCustomBtn { display: none; } /* Hidden until owner unlocks */
 
-    /* Modals & Speech Bubbles */
+    /* Modals & Popups */
     .modal {
       display: none;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.4);
-      backdrop-filter: blur(5px);
+      background: rgba(0,0,0,0.45);
+      backdrop-filter: blur(6px);
       z-index: 1000;
       justify-content: center;
       align-items: center;
@@ -152,16 +212,15 @@
 
     .modal-content {
       background: #ffffff;
-      border-radius: 24px;
+      border-radius: 26px;
       width: 100%;
       max-width: 380px;
       padding: 24px;
-      box-shadow: 0 12px 32px rgba(0,0,0,0.2);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.22);
       max-height: 85vh;
       overflow-y: auto;
     }
 
-    /* Heart Shaped Menu Styling */
     .heart-modal-content {
       background: linear-gradient(135deg, #fff0f3, #ffe3e8);
       border: 3px solid var(--accent-color);
@@ -170,72 +229,59 @@
     }
 
     .social-bubble {
-      background: #ffffff;
+      background: #f8f6f0;
       border-radius: 18px;
       padding: 16px;
-      position: relative;
       border: 1px solid var(--primary-color);
       font-size: 0.9rem;
-      line-height: 1.4;
+      line-height: 1.5;
       margin-bottom: 16px;
-    }
-
-    .social-links-list { display: flex; flex-direction: column; gap: 10px; }
-    
-    .social-link-card {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: var(--bg-color);
-      padding: 10px 16px;
-      border-radius: 12px;
-      text-decoration: none;
-      color: var(--text-color);
       font-weight: 500;
-      font-size: 0.9rem;
     }
 
     .game-option-btn {
       width: 100%;
-      padding: 12px;
+      padding: 14px;
       margin: 8px 0;
       border: none;
-      border-radius: 16px;
+      border-radius: 18px;
       background: #ffffff;
       color: var(--text-color);
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-      transition: transform 0.2s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      transition: transform 0.2s, background 0.2s;
     }
 
     .game-option-btn:hover { transform: translateY(-2px); background: var(--accent-color); color: white; }
 
-    /* Virtual Pet Styling */
+    /* Virtual Pet Room */
     .pet-room {
       background: #fcf8f2;
-      border-radius: 20px;
+      border-radius: 22px;
       padding: 20px;
       text-align: center;
-      position: relative;
+      border: 2px solid #f0e6dc;
     }
 
-    .cat-avatar { font-size: 80px; user-select: none; transition: transform 0.3s; cursor: pointer; }
-    .cat-avatar:active { transform: scale(0.9); }
+    .cat-avatar { font-size: 85px; user-select: none; transition: transform 0.3s; cursor: pointer; filter: drop-shadow(0 6px 10px rgba(0,0,0,0.1)); }
+    .cat-avatar:active { transform: scale(0.92); }
 
-    .status-bars { margin: 12px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.8rem; }
-    .pet-actions { display: flex; justify-content: center; gap: 10px; margin-top: 12px; }
+    .status-bars { margin: 14px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.82rem; font-weight: 600; }
+    .pet-actions { display: flex; justify-content: center; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
 
     /* Quiz Styling */
     .quiz-option {
       width: 100%;
-      padding: 10px;
-      margin: 6px 0;
+      padding: 12px;
+      margin: 8px 0;
       border: 1px solid var(--primary-color);
-      border-radius: 10px;
+      border-radius: 12px;
       background: white;
       cursor: pointer;
       text-align: left;
+      font-weight: 500;
+      font-size: 0.9rem;
     }
 
     .quiz-option:hover { background: var(--bg-color); }
@@ -247,7 +293,7 @@
   <div class="app-container">
     <!-- Cover Banner -->
     <div class="cover-container" id="coverBanner">
-      <button class="edit-btn cover-edit-btn" onclick="triggerFileInput('coverInput')" title="Change Cover Photo">✏️</button>
+      <button class="edit-btn cover-edit-btn" id="coverEditBtn" onclick="triggerFileInput('coverInput')" title="Change Cover Photo">✏️</button>
       <input type="file" id="coverInput" accept="image/*" onchange="handleCoverUpload(event)">
     </div>
 
@@ -255,25 +301,53 @@
     <div class="profile-section">
       <div class="avatar-wrapper">
         <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=250" alt="Profile Avatar" class="avatar" id="avatarImg">
-        <button class="edit-btn avatar-edit-btn" onclick="triggerFileInput('avatarInput')" title="Change Profile Picture">✏️</button>
+        <button class="edit-btn avatar-edit-btn" id="avatarEditBtn" onclick="triggerFileInput('avatarInput')" title="Change Profile Picture">✏️</button>
         <input type="file" id="avatarInput" accept="image/*" onchange="handleAvatarUpload(event)">
       </div>
       <div class="user-name">
         <span id="userNameText">Monique S. Sabornido</span>
-        <span style="font-size: 0.9rem; cursor: pointer; opacity: 0.6;" onclick="editName()" title="Edit Name">✏️</span>
+        <span class="name-edit-icon" id="nameEditIcon" onclick="editName()" title="Edit Name">✏️</span>
       </div>
       <div class="bio-text">Rooted in faith & psychology 🕊️✨</div>
     </div>
 
-    <!-- Interactive Modules (Left & Right Buttons) -->
+    <!-- Centered 3D Navigation Action Buttons -->
     <div class="modules-bar">
-      <button class="module-icon-btn" onclick="openModal('socialModal')" title="Social Links & Greeting">🕊️</button>
-      <button class="module-icon-btn" onclick="openModal('gameMenuModal')" title="Interactive Games">🎮</button>
+      <!-- 3D Chat/Social Button -->
+      <button class="icon-card-btn" onclick="openModal('socialModal')">
+        <div class="icon-3d-wrapper chat-3d-bg">
+          <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+            <path d="M12 8l1.5 3 3.5.5-2.5 2.5.6 3.5L12 16l-3.1 1.6.6-3.5L7 11.5l3.5-.5L12 8z" fill="#ffffff" stroke="none"/>
+          </svg>
+        </div>
+        <span>Get in Touch!</span>
+      </button>
+
+      <!-- 3D Game Controller Button -->
+      <button class="icon-card-btn" onclick="openModal('gameMenuModal')">
+        <div class="icon-3d-wrapper game-3d-bg">
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="6" width="20" height="12" rx="6" fill="#ffffff" fill-opacity="0.25"/>
+            <path d="M6 12h4m-2-2v4" stroke-width="2.5"/>
+            <circle cx="15" cy="10" r="1" fill="#ffffff"/>
+            <circle cx="18" cy="13" r="1" fill="#ffffff"/>
+          </svg>
+        </div>
+        <span>Play Games!</span>
+      </button>
     </div>
 
-    <!-- Controls Bar -->
+    <!-- Social / Link List -->
+    <div class="links-section">
+      <a href="https://instagram.com" target="_blank" class="link-item">Instagram ✨</a>
+      <a href="https://tiktok.com" target="_blank" class="link-item">TikTok 🎵</a>
+      <a href="https://threads.net" target="_blank" class="link-item">Threads 🧵</a>
+    </div>
+
+    <!-- Controls Bar (Theme customizer is hidden for visitors) -->
     <div class="controls-bar">
-      <button class="pill-btn" onclick="openModal('themeModal')">🎨 Customize Theme</button>
+      <button class="pill-btn" id="themeCustomBtn" onclick="openModal('themeModal')">🎨 Customize Theme</button>
       <button class="pill-btn" id="lockStatusBtn" onclick="toggleLock()">🔒 Passcode Locked</button>
     </div>
   </div>
@@ -281,8 +355,8 @@
   <!-- Social Media & Greeting Modal -->
   <div class="modal" id="socialModal">
     <div class="modal-content">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-        <h3>🕊️ Greetings & Socials</h3>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+        <h3 style="font-size: 1.1rem;">🕊️ Greetings & Socials</h3>
         <button class="pill-btn" onclick="closeModal('socialModal')">✕ Close</button>
       </div>
 
@@ -290,10 +364,10 @@
         "Hello sisters and brothers in Christ! If you want to know my other social accounts, feel free to check the links below:"
       </div>
 
-      <div class="social-links-list">
-        <a href="https://instagram.com" target="_blank" class="social-link-card"><span>📸 Instagram</span> <span>↗</span></a>
-        <a href="https://tiktok.com" target="_blank" class="social-link-card"><span>🎵 TikTok</span> <span>↗</span></a>
-        <a href="https://threads.net" target="_blank" class="social-link-card"><span>🧵 Threads</span> <span>↗</span></a>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <a href="https://instagram.com" target="_blank" class="link-item" style="padding: 10px;">📸 Instagram Account</a>
+        <a href="https://tiktok.com" target="_blank" class="link-item" style="padding: 10px;">🎵 TikTok Profile</a>
+        <a href="https://threads.net" target="_blank" class="link-item" style="padding: 10px;">🧵 Threads Community</a>
       </div>
     </div>
   </div>
@@ -301,14 +375,14 @@
   <!-- Games Menu Modal (Heart Style) -->
   <div class="modal" id="gameMenuModal">
     <div class="modal-content heart-modal-content">
-      <h2 style="color: var(--accent-color); margin-bottom: 8px;">💖 Mini Arcade 💖</h2>
-      <p style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 16px;">Pick a fun module to play!</p>
+      <h2 style="color: #b35974; margin-bottom: 6px;">💖 Mini Arcade 💖</h2>
+      <p style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 16px; font-weight: 600;">Choose an interactive experience:</p>
 
       <button class="game-option-btn" onclick="startBibleQuiz()">📖 Bible Quiz</button>
       <button class="game-option-btn" onclick="startPsychQuiz()">🧠 Psychology Quiz</button>
       <button class="game-option-btn" onclick="openPetRoom()">🐾 Pet My Cat Room</button>
       
-      <button class="pill-btn" style="margin-top: 16px; background: white;" onclick="closeModal('gameMenuModal')">Exit Game Menu</button>
+      <button class="pill-btn" style="margin-top: 14px; background: white;" onclick="closeModal('gameMenuModal')">Exit Menu</button>
     </div>
   </div>
 
@@ -316,25 +390,25 @@
   <div class="modal" id="petModal">
     <div class="modal-content">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-        <h3>🐾 Virtual Pet Room</h3>
+        <h3 style="font-size: 1.1rem;">🐾 Virtual White Cat Room</h3>
         <button class="pill-btn" onclick="closeModal('petModal')">✕ Exit</button>
       </div>
 
       <div class="pet-room">
-        <div class="cat-avatar" id="catEmoji" onclick="petCat()">🐱</div>
-        <div style="font-weight: 600; margin-top: 6px;" id="catStatusText">Status: Pure & Happy ✨</div>
+        <div class="cat-avatar" id="catEmoji" onclick="petCat()" title="Click to pet!">🐈‍⬛</div>
+        <div style="font-weight: 700; margin-top: 8px; color: #5a4d44;" id="catStatusText">Status: Pure & Happy ✨</div>
 
         <div class="status-bars">
           <div>💖 Love: <span id="loveVal">100</span>%</div>
-          <div>🍖 Hunger: <span id="hungerVal">80</span>%</div>
+          <div>🍖 Hunger: <span id="hungerVal">85</span>%</div>
           <div>😴 Energy: <span id="energyVal">90</span>%</div>
-          <div>🧼 Cleanliness: <span id="cleanVal">85</span>%</div>
+          <div>🧼 Clean: <span id="cleanVal">90</span>%</div>
         </div>
 
         <div class="pet-actions">
-          <button class="pill-btn" onclick="petCat()">🖐️ Pet Cat</button>
-          <button class="pill-btn" onclick="feedCat()">🐟 Feed Treat</button>
-          <button class="pill-btn" onclick="batheCat()">🚿 Bathe Faucet</button>
+          <button class="pill-btn" style="font-size:0.78rem; padding: 6px 10px;" onclick="petCat()">🖐️ Pet</button>
+          <button class="pill-btn" style="font-size:0.78rem; padding: 6px 10px;" onclick="feedCat()">🐟 Feed</button>
+          <button class="pill-btn" style="font-size:0.78rem; padding: 6px 10px;" onclick="batheCat()">🚿 Bathe</button>
         </div>
       </div>
     </div>
@@ -344,20 +418,20 @@
   <div class="modal" id="quizModal">
     <div class="modal-content">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-        <h3 id="quizTitle">Quiz</h3>
+        <h3 id="quizTitle" style="font-size: 1.1rem;">Quiz</h3>
         <button class="pill-btn" onclick="closeModal('quizModal')">✕ Exit</button>
       </div>
 
       <div id="quizContainer">
-        <p style="font-weight: 600; margin-bottom: 12px;" id="questionText">Question goes here...</p>
+        <p style="font-weight: 600; margin-bottom: 12px; font-size: 0.95rem;" id="questionText">Question...</p>
         <div id="optionsContainer"></div>
-        <div id="explanationBox" style="margin-top: 12px; font-size: 0.85rem; padding: 10px; background: var(--bg-color); border-radius: 8px; display: none;"></div>
-        <button class="pill-btn" id="nextQuestionBtn" style="margin-top: 12px; display: none;" onclick="nextQuestion()">Next Question ➔</button>
+        <div id="explanationBox" style="margin-top: 12px; font-size: 0.85rem; padding: 12px; background: #f4efe6; border-radius: 10px; display: none; font-weight: 500;"></div>
+        <button class="pill-btn" id="nextQuestionBtn" style="margin-top: 14px; display: none; width: 100%;" onclick="nextQuestion()">Next Question ➔</button>
       </div>
     </div>
   </div>
 
-  <!-- Theme Selector Modal -->
+  <!-- Theme Selector Modal (Owner Only) -->
   <div class="modal" id="themeModal">
     <div class="modal-content">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
@@ -390,14 +464,14 @@
 
     function verifyPasscode() {
       if (isUnlocked) return true;
-      const input = prompt("🔐 Enter Owner Passcode to make changes:");
+      const input = prompt("🔐 Enter Owner Passcode (1101):");
       if (input && simpleHash(input) === HASHED_PIN) {
         isUnlocked = true;
-        document.getElementById('lockStatusBtn').innerText = "🔓 Owner Unlocked";
-        alert("Passcode verified! You can now edit profile settings.");
+        setOwnerMode(true);
+        alert("Owner Access Granted! You can now customize themes and edit your profile.");
         return true;
       } else {
-        alert("Incorrect passcode! Only the website owner can edit.");
+        alert("Incorrect passcode! Only the owner can access admin tools.");
         return false;
       }
     }
@@ -405,19 +479,39 @@
     function toggleLock() {
       if (isUnlocked) {
         isUnlocked = false;
-        document.getElementById('lockStatusBtn').innerText = "🔒 Passcode Locked";
-        alert("Locked!");
+        setOwnerMode(false);
+        alert("Locked! Owner tools hidden.");
       } else {
         verifyPasscode();
       }
     }
 
-    // Modal Controls
+    function setOwnerMode(unlocked) {
+      const lockBtn = document.getElementById('lockStatusBtn');
+      const themeBtn = document.getElementById('themeCustomBtn');
+      const editBtns = document.querySelectorAll('.edit-btn');
+      const nameEdit = document.getElementById('nameEditIcon');
+
+      if (unlocked) {
+        lockBtn.innerText = "🔓 Owner Unlocked";
+        themeBtn.style.display = "inline-block";
+        editBtns.forEach(btn => btn.style.display = "flex");
+        nameEdit.style.display = "inline-block";
+      } else {
+        lockBtn.innerText = "🔒 Passcode Locked";
+        themeBtn.style.display = "none";
+        editBtns.forEach(btn => btn.style.display = "none");
+        nameEdit.style.display = "none";
+      }
+    }
+
+    // Modal Helpers
     function openModal(id) { document.getElementById(id).classList.add('active'); }
     function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
-    // Upload & Profile Logic
-    function triggerFileInput(id) { if (verifyPasscode()) document.getElementById(id).click(); }
+    // Profile & Upload Handlers
+    function triggerFileInput(id) { if (isUnlocked) document.getElementById(id).click(); }
+    
     function handleCoverUpload(e) {
       const file = e.target.files[0];
       if (file) {
@@ -443,9 +537,9 @@
     }
 
     function editName() {
-      if (!verifyPasscode()) return;
+      if (!isUnlocked) return;
       const current = document.getElementById('userNameText').innerText;
-      const updated = prompt("Enter display name:", current);
+      const updated = prompt("Enter your display name:", current);
       if (updated && updated.trim()) {
         document.getElementById('userNameText').innerText = updated.trim();
         localStorage.setItem('user_name', updated.trim());
@@ -458,10 +552,13 @@
       document.documentElement.style.setProperty('--accent-color', accent);
       document.documentElement.style.setProperty('--light-accent', light);
       document.documentElement.style.setProperty('--text-color', text);
+      
+      const themeObj = { bg, primary, accent, light, text };
+      localStorage.setItem('user_theme', JSON.stringify(themeObj));
     }
 
     // Virtual Pet Cat State & Actions
-    let petState = { love: 100, hunger: 80, energy: 90, clean: 85 };
+    let petState = { love: 100, hunger: 85, energy: 90, clean: 90 };
 
     function openPetRoom() {
       closeModal('gameMenuModal');
@@ -480,26 +577,26 @@
       document.getElementById('catEmoji').innerText = "😻";
       document.getElementById('catStatusText').innerText = "Status: Purring happily! ❤️";
       updatePetUI();
-      setTimeout(() => document.getElementById('catEmoji').innerText = "🐱", 1500);
+      setTimeout(() => document.getElementById('catEmoji').innerText = "🐈‍⬛", 1500);
     }
 
     function feedCat() {
       petState.hunger = Math.min(100, petState.hunger + 15);
       document.getElementById('catEmoji').innerText = "😸";
-      document.getElementById('catStatusText').innerText = "Status: Munching delicious treats! 🐟";
+      document.getElementById('catStatusText').innerText = "Status: Enjoying treats! 🐟";
       updatePetUI();
-      setTimeout(() => document.getElementById('catEmoji').innerText = "🐱", 1500);
+      setTimeout(() => document.getElementById('catEmoji').innerText = "🐈‍⬛", 1500);
     }
 
     function batheCat() {
       petState.clean = 100;
-      document.getElementById('catEmoji').innerText = "🙀";
-      document.getElementById('catStatusText').innerText = "Status: Fresh & Squeaky Clean! 🧼✨";
+      document.getElementById('catEmoji').innerText = "😽";
+      document.getElementById('catStatusText').innerText = "Status: Squeaky clean & fluffy! 🚿";
       updatePetUI();
-      setTimeout(() => document.getElementById('catEmoji').innerText = "🐱", 1500);
+      setTimeout(() => document.getElementById('catEmoji').innerText = "🐈‍⬛", 1500);
     }
 
-    // Quiz Logic
+    // Quizzes
     const bibleQuestions = [
       { q: "Which book in the Bible comes right after Psalms?", options: ["Proverbs", "Ecclesiastes", "Isaiah", "Matthew"], ans: 0, exp: "Proverbs follows Psalms in the Old Testament wisdom literature." },
       { q: "What is the shortest verse in the Bible?", options: ["John 11:35", "Genesis 1:1", "Psalm 23:1", "1 John 4:8"], ans: 0, exp: "John 11:35 states simply: 'Jesus wept.'" }
@@ -557,7 +654,7 @@
         expBox.innerHTML = `❌ <b>Incorrect.</b> Correct answer: ${q.options[q.ans]}.<br>${q.exp}`;
       }
       expBox.style.display = "block";
-      document.getElementById('nextQuestionBtn').style.display = "inline-block";
+      document.getElementById('nextQuestionBtn').style.display = "block";
     }
 
     function nextQuestion() {
@@ -565,14 +662,19 @@
       loadQuestion();
     }
 
-    // Load Local Storage on startup
+    // Startup Load
     window.addEventListener('DOMContentLoaded', () => {
       const savedName = localStorage.getItem('user_name');
       const savedAvatar = localStorage.getItem('user_avatar');
       const savedCover = localStorage.getItem('user_cover');
+      const savedTheme = JSON.parse(localStorage.getItem('user_theme'));
+
       if (savedName) document.getElementById('userNameText').innerText = savedName;
       if (savedAvatar) document.getElementById('avatarImg').src = savedAvatar;
       if (savedCover) document.getElementById('coverBanner').style.backgroundImage = `url(${savedCover})`;
+      if (savedTheme) {
+        applyPalette(savedTheme.bg, savedTheme.primary, savedTheme.accent, savedTheme.light, savedTheme.text);
+      }
     });
   </script>
 </body>
