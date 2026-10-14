@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monique's Digital Sanctuary ✝️</title>
+    <style>
+        :root {
+            --bg-color: #FAF7F2;
+            --card-bg: #FFFFFF;
+            --pastel-pink: #F7D6E0;
+            --deep-pink: #D483A9;
+            --olive-green: #8A9A86;
+            --baby-blue: #C3D7E8;
+            --text-color: #4A403B;
+            --border-beige: #E6DFD5;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            /* Botanical Vine Side Rails */
+            background-image: linear-gradient(90deg, #EFE9DF 0%, transparent 5%, transparent 95%, #EFE9DF 100%),
+                              radial-gradient(var(--olive-green) 0.75px, transparent 0.75px);
+            background-size: 100% 100%, 20px 20px;
+            background-attachment: fixed;
+        }
+
+        /* System Status Bar */
+        .system-bar {
+            background: #3B3431;
+            color: #FAF7F2;
+            font-size: 11px;
+            padding: 5px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            letter-spacing: 0.5px;
+        }
+
+        /* Mandatory Identity Modal Gate */
+        #identity-modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(59, 52, 49, 0.75);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        .modal-box {
+            background: var(--card-bg);
+            padding: 35px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 420px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            border: 2px solid var(--pastel-pink);
+            text-align: center;
+        }
+        .modal-box h3 { color: var(--deep-pink); margin-top: 0; }
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid var(--border-beige);
+            border-radius: 10px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        .btn-primary {
+            background: var(--olive-green);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 10px;
+            transition: 0.2s;
+        }
+        .btn-primary:hover { opacity: 0.9; }
+
+        /* Main Container */
+        .container {
+            max-width: 700px;
+            margin: 30px auto;
+            padding: 0 15px;
+        }
+
+        /* Profile Header */
+        .profile-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(138, 154, 134, 0.15);
+            border: 1px solid var(--border-beige);
+            position: relative;
+        }
+        .profile-pic {
+            width: 110px; height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--pastel-pink);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .profile-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-color);
+            margin: 10px 0 5px 0;
+        }
+        .ig-handle {
+            display: inline-block;
+            background: var(--baby-blue);
+            color: #3B3431;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-bottom: 10px;
+        }
+        .bio-text {
+            font-size: 14px;
+            color: #6B5E57;
+            max-width: 500px;
+            margin: 10px auto;
+            line-height: 1.5;
+        }
+
+        /* Admin Writer Panel Toggle Button */
+        .admin-trigger {
+            background: var(--pastel-pink);
+            color: var(--text-color);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        /* Admin Dashboard Panel */
+        #admin-panel {
+            display: none;
+            background: #F9F5F0;
+            border: 2px dashed var(--olive-green);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            text-align: left;
+        }
+        #admin-panel h4 { color: var(--olive-green); margin-top: 0; }
+
+        /* Journal Cards */
+        .journal-card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            border: 1px solid var(--border-beige);
+        }
+        .journal-title {
+            color: var(--deep-pink);
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        .journal-date {
+            font-size: 12px;
+            color: #9C8E85;
+            margin-bottom: 15px;
+        }
+        .journal-body {
+            font-size: 15px;
+            line-height: 1.7;
+            white-space: pre-wrap;
+        }
+        .journal-img {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        /* Comments Section */
+        .comments-section {
+            margin-top: 20px;
+            border-top: 1px solid var(--border-beige);
+            padding-top: 15px;
+        }
+        .comment-item {
+            background: #FAF7F2;
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin: 8px 0;
+            font-size: 13px;
+        }
+        .gender-badge {
+            font-size: 10px;
+            background: var(--baby-blue);
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 6px;
+            color: #3B3431;
+        }
+
+        /* Interactive Quiz Card */
+        .quiz-card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 25px;
+            border: 1px solid var(--border-beige);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+        .quiz-option {
+            background: #FAF7F2;
+            border: 1px solid var(--border-beige);
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 14px;
+        }
+        .quiz-option:hover {
+            background: var(--pastel-pink);
+        }
+    </style>
+</head>
+<body onload="initApp()">
+
+    <!-- Secure System Status Bar -->
+    <div class="system-bar">
+        <span>🔒 SECURE IT SANDBOX | ENCRYPTED CLIENT ENVIRONMENT</span>
+        <span id="session-identity">Guest: Not Verified</span>
+    </div>
+
+    <!-- Mandatory Identity Gate Modal -->
+    <div id="identity-modal">
+        <div class="modal-box">
+            <h3>✨ Welcome to Monique’s Sanctuary ✝️</h3>
+            <p style="font-size: 13px; color: #6B5E57; font-style: italic;">
+                “Welcome to Monique’s journal where she can play and write her thoughts. I hope you’ll like it. -God.”
+            </p>
+            <hr style="border:0; border-top:1px solid var(--border-beige); margin: 15px 0;">
+            <p style="font-size: 13px; font-weight: bold; text-align: left;">Please verify your identity to enter:</p>
+            <input type="text" id="visitor-name" class="form-control" placeholder="Enter your preferred name...">
+            <select id="visitor-gender" class="form-control">
+                <option value="" disabled selected>Select your gender...</option>
+                <option value="Female">Female</option>
+                <option value="Male">Male</option>
+                <option value="Prefer not to say">Prefer not to say</option>
+            </select>
+            <button class="btn-primary" onclick="verifyIdentity()">Enter Sanctuary ✝️</button>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container" id="main-app" style="display:none;">
+        
+        <!-- Profile Header Section -->
+        <div class="profile-card">
+            <img id="profile-img-display" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400" alt="Monique" class="profile-pic">
+            <h1 class="profile-name" id="profile-name-display">Monique</h1>
+            <div>
+                <a href="https://instagram.com/mo0.v" target="_blank" class="ig-handle">@mo0.v 📸</a>
+            </div>
+            <p class="bio-text" id="profile-bio-display">
+                A quiet space for my faith, psychology insights, and personal stories. Welcome to my world! ✝️🌸
+            </p>
+            <button class="admin-trigger" onclick="promptAdminLogin()">🔒 Monique's Writer Panel</button>
+
+            <!-- Admin Writer Panel (Locked by Default) -->
+            <div id="admin-panel">
+                <h4>🛠️ Monique's Admin Dashboard (Authenticated)</h4>
+                <p style="font-size: 12px; color: #6B5E57;">Manage profile settings and publish or delete journal entries.</p>
+                
+                <hr style="border:0; border-top:1px solid var(--border-beige); margin: 10px 0;">
+                
+                <strong>Update Profile & Bio:</strong>
+                <input type="text" id="admin-new-pic" class="form-control" placeholder="Profile Image URL">
+                <textarea id="admin-new-bio" class="form-control" rows="2" placeholder="Update your bio..."></textarea>
+                <button class="btn-primary" style="background:var(--deep-pink);" onclick="saveProfileChanges()">Save Profile Updates</button>
+
+                <h5 style="margin: 15px 0 5px 0; color: var(--deep-pink);">✍️ Create New Journal Entry:</h5>
+                <input type="text" id="new-title" class="form-control" placeholder="Journal Title...">
+                <input type="text" id="new-date" class="form-control" placeholder="Date (e.g., October 14, 2026)">
+                <textarea id="new-body" class="form-control" rows="5" placeholder="Write your deep reflection here..."></textarea>
+                <input type="text" id="new-image" class="form-control" placeholder="Optional Image URL...">
+                <button class="btn-primary" onclick="publishNewPost()">Publish Entry</button>
+            </div>
+        </div>
+
+        <!-- Dynamic Journal Feed Container -->
+        <div id="journal-feed"></div>
+
+        <!-- Interactive Quiz & Game Card -->
+        <div class="quiz-card">
+            <h3 style="color: var(--deep-pink); margin-top:0;">🧠 Interactive Bible & Psychology Quiz</h3>
+            <p id="quiz-question" style="font-weight:600; font-size:15px;"></p>
+            <div id="quiz-options-container"></div>
+            <button class="btn-primary" style="background: var(--deep-pink); margin-top: 15px;" onclick="loadNewQuiz()">🎲 Generate Next Question</button>
+        </div>
+
+    </div>
+
+    <script>
+        // --- SECURE DATA STORE (LOCALSTORAGE) ---
+        const DEFAULT_PROFILE = {
+            name: "Monique",
+            ig: "@mo0.v",
+            bio: "A quiet space for my faith, psychology insights, and personal stories. Welcome to my world! ✝️🌸",
+            pic: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400"
+        };
+
+        const DEFAULT_POSTS = [
+            {
+                id: 1,
+                title: "Reflections on Creation, Truth, and Grace",
+                date: "October 14, 2026",
+                body: `Today, I found myself sitting in quiet awe, reflecting on how majestic God truly is. When I look closely at how everything in our world is formed and held together, I realize that even science—our human process of observing, testing, and applying logic to understand the universe—is simply us exploring what God had already created long before we arrived.\n\nEverything is interconnected. Fields like medicine and psychology exist only because the blueprint was already placed in nature. Take psychology, for instance: it studies human behavior, our emotional processing, and how our childhood experiences shape who we grow up to be. But scientists didn't invent those mental or emotional mechanisms—they are merely discovering the intricate mind, heart, and soul that God engineered into human nature from the very beginning.\n\nThink about human life itself. Biologically, everything starts from just a single cell that rapidly divides and grows to form a brain, a beating heart, blood vessels, the capacity to reason, and an eternal soul and spirit. It’s the same across nature, plants, and animals. Scientists explore what is already here, discover natural laws, and name creatures or phenomena—sometimes even giving them their own names or surnames. Yet, beneath and above this earth, so much remains completely unexplored and unknown to human understanding.\n\nHow could all of this happen by chance? How could all these complex systems exist all at once, reproducing and developing in harmony, without a Greater Creator behind them? I am convinced there is Someone far beyond our finite human understanding—a Creator whose full essence cannot be seen or touched, nor fully captured by human definition. There must be a God who is self-existent, with no beginning and no end:\n\n> "Before the mountains were brought forth, or ever you had formed the earth and the world, from everlasting to everlasting you are God." — Psalm 90:2`,
+                image: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=600",
+                comments: []
+            }
+        ];
+
+        // --- QUIZ BANK ---
+        const quizBank = [
+            {
+                q: "What is the biological starting point of human development?",
+                options: ["A) A single cell / zygote", "B) Fully formed organ tissue", "C) Nervous system cells"],
+                correct: 0
+            },
+            {
+                q: "Which psychological theory explores human needs like hygiene and motivators in the workplace?",
+                options: ["A) Classical Test Theory", "B) Herzberg's Two-Factor Theory", "C) Cattell-Horn-Carroll Theory"],
+                correct: 1
+            },
+            {
+                q: "According to Genesis 1:1, who created the heavens and the earth?",
+                options: ["A) Nature and chance", "B) God", "C) Cosmic evolution"],
+                correct: 1
+            },
+            {
+                q: "What does the Holy Spirit act as in our spiritual lives according to Scripture?",
+                options: ["A) Living water", "B) A temporary guide", "C) An abstract concept"],
+                correct: 0
+            }
+        ];
+        let currentQuizIndex = 0;
+
+        // --- INITIALIZATION ---
+        function initApp() {
+            // Check if visitor already verified in session
+            let verifiedUser = sessionStorage.getItem('monique_visitor');
+            if(verifiedUser) {
+                let userObj = JSON.parse(verifiedUser);
+                document.getElementById('session-identity').innerText = `User: ${userObj.name} (${userObj.gender})`;
+                document.getElementById('identity-modal').style.display = 'none';
+                document.getElementById('main-app').style.display = 'block';
+            }
+            loadProfile();
+            renderFeed();
+            loadNewQuiz();
+        }
+
+        function verifyIdentity() {
+            let name = document.getElementById('visitor-name').value.trim();
+            let gender = document.getElementById('visitor-gender').value;
+
+            if(!name || !gender) {
+                alert("Security Error: Please provide both your preferred name and gender to enter.");
+                return;
+            }
+
+            let userData = { name: name, gender: gender };
+            sessionStorage.setItem('monique_visitor', JSON.stringify(userData));
+            
+            document.getElementById('session-identity').innerText = `User: ${name} (${gender})`;
+            document.getElementById('identity-modal').style.display = 'none';
+            document.getElementById('main-app').style.display = 'block';
+        }
+
+        // --- PROFILE FUNCTIONS ---
+        function loadProfile() {
+            let profile = JSON.parse(localStorage.getItem('monique_profile')) || DEFAULT_PROFILE;
+            document.getElementById('profile-name-display').innerText = profile.name;
+            document.getElementById('profile-bio-display').innerText = profile.bio;
+            document.getElementById('profile-img-display').src = profile.pic;
+            
+            document.getElementById('admin-new-pic').value = profile.pic;
+            document.getElementById('admin-new-bio').value = profile.bio;
+        }
+
+        function promptAdminLogin() {
+            let pin = prompt("Enter Monique's Writer Passcode:");
+            if (pin === "1101") {
+                document.getElementById('admin-panel').style.display = 'block';
+                alert("Access Granted: Writer Panel Unlocked.");
+            } else if (pin !== null) {
+                alert("Access Denied: Incorrect Passcode.");
+            }
+        }
+
+        function saveProfileChanges() {
+            let newPic = document.getElementById('admin-new-pic').value.trim();
+            let newBio = document.getElementById('admin-new-bio').value.trim();
+            
+            let profile = JSON.parse(localStorage.getItem('monique_profile')) || DEFAULT_PROFILE;
+            if(newPic) profile.pic = newPic;
+            if(newBio) profile.bio = newBio;
+
+            localStorage.setItem('monique_profile', JSON.stringify(profile));
+            loadProfile();
+            alert("Profile successfully updated!");
+        }
+
+        // --- POST MANAGEMENT (CRUD) ---
+        function getPosts() {
+            let posts = localStorage.getItem('monique_posts');
+            return posts ? JSON.parse(posts) : DEFAULT_POSTS;
+        }
+
+        function savePosts(posts) {
+            localStorage.setItem('monique_posts', JSON.stringify(posts));
+        }
+
+        function publishNewPost() {
+            let title = document.getElementById('new-title').value.trim();
+            let date = document.getElementById('new-date').value.trim();
+            let body = document.getElementById('new-body').value.trim();
+            let image = document.getElementById('new-image').value.trim();
+
+            if(!title || !body) {
+                alert("Title and Body are required to publish an entry.");
+                return;
+            }
+
+            let posts = getPosts();
+            let newEntry = {
+                id: Date.now(),
+                title: title,
+                date: date || "Today",
+                body: body,
+                image: image,
+                comments: []
+            };
+
+            posts.unshift(newEntry);
+            savePosts(posts);
+            renderFeed();
+
+            document.getElementById('new-title').value = "";
+            document.getElementById('new-date').value = "";
+            document.getElementById('new-body').value = "";
+            document.getElementById('new-image').value = "";
+            alert("Journal entry successfully published.");
+        }
+
+        function deletePost(id) {
+            if(confirm("Are you sure you want to permanently delete this journal entry?")) {
+                let posts = getPosts();
+                posts = posts.filter(p => p.id !== id);
+                savePosts(posts);
+                renderFeed();
+            }
+        }
+
+        function renderFeed() {
+            let feedContainer = document.getElementById('journal-feed');
+            let posts = getPosts();
+            let html = "";
+
+            posts.forEach(post => {
+                let commentsHtml = "";
+                if(post.comments && post.comments.length > 0) {
+                    post.comments.forEach(c => {
+                        commentsHtml += `<div class="comment-item"><b>${escapeHtml(c.name)}</b><span class="gender-badge">${escapeHtml(c.gender)}</span>: <i>"${escapeHtml(c.text)}"</i></div>`;
+                    });
+                } else {
+                    commentsHtml = `<p style="font-size:12px; color:#9C8E85; font-style:italic;">No comments yet. Be the first to share your thoughts!</p>`;
+                }
+
+                html += `
+                    <div class="journal-card">
+                        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                            <div>
+                                <div class="journal-title">${escapeHtml(post.title)}</div>
+                                <div class="journal-date">${escapeHtml(post.date)}</div>
+                            </div>
+                            <button onclick="deletePost(${post.id})" style="background:#ffdddd; border:none; color:red; padding:4px 8px; border-radius:5px; cursor:pointer; font-size:11px;">🗑️ Delete</button>
+                        </div>
+                        <div class="journal-body">${escapeHtml(post.body)}</div>
+                        ${post.image ? `<img src="${escapeHtml(post.image)}" class="journal-img" alt="Journal attachment">` : ''}
+                        
+                        <div class="comments-section">
+                            <h4 style="font-size: 14px; color: var(--deep-pink); margin-bottom: 8px;">💬 Reader Thoughts & Comments</h4>
+                            <div id="comments-list-${post.id}">
+                                ${commentsHtml}
+                            </div>
+                            <div style="margin-top: 10px; display:flex; gap:8px;">
+                                <input type="text" id="comment-input-${post.id}" class="form-control" placeholder="Leave a reflection..." style="margin:0;">
+                                <button class="btn-primary" style="width: auto; padding: 0 15px; margin:0;" onclick="submitComment(${post.id})">Post</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            feedContainer.innerHTML = html;
+        }
+
+        function submitComment(postId) {
+            let input = document.getElementById(`comment-input-${postId}`);
+            let text = input.value.trim();
+            if(!text) return;
+
+            let visitor = JSON.parse(sessionStorage.getItem('monique_visitor')) || { name: "Anonymous", gender: "Not specified" };
+
+            let posts = getPosts();
+            let post = posts.find(p => p.id === postId);
+            if(post) {
+                if(!post.comments) post.comments = [];
+                post.comments.push({
+                    name: visitor.name,
+                    gender: visitor.gender,
+                    text: text
+                });
+                savePosts(posts);
+                renderFeed();
+            }
+        }
+
+        // --- DYNAMIC QUIZ ENGINE ---
+        function loadNewQuiz() {
+            let qData = quizBank[currentQuizIndex];
+            document.getElementById('quiz-question').innerText = qData.q;
+            
+            let optionsHtml = "";
+            qData.options.forEach((opt, idx) => {
+                optionsHtml += `<div class="quiz-option" onclick="handleQuizAnswer(${idx}, ${qData.correct})">${opt}</div>`;
+            });
+            document.getElementById('quiz-options-container').innerHTML = optionsHtml;
+
+            currentQuizIndex = (currentQuizIndex + 1) % quizBank.length;
+        }
+
+        function handleQuizAnswer(selected, correct) {
+            if(selected === correct) {
+                alert("Correct! 🎉 Excellent reasoning.");
+            } else {
+                alert("Incorrect, but keep exploring and learning!");
+            }
+            loadNewQuiz();
+        }
+
+        function escapeHtml(text) {
+            if(!text) return "";
+            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+    </script>
+</body>
+</html>
