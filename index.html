@@ -1,576 +1,474 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monique's Digital Sanctuary ✝️</title>
-    <style>
-        :root {
-            --bg-color: #FAF7F2;
-            --card-bg: #FFFFFF;
-            --pastel-pink: #F7D6E0;
-            --deep-pink: #D483A9;
-            --olive-green: #8A9A86;
-            --baby-blue: #C3D7E8;
-            --text-color: #4A403B;
-            --border-beige: #E6DFD5;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monique | Digital Sanctuary</title>
+  <style>
+    :root {
+      --bg-color: #f4efe6;
+      --card-bg: rgba(255, 255, 255, 0.85);
+      --primary-color: #8a9a86;
+      --accent-color: #d8a7b1;
+      --text-color: #4a403a;
+      --light-accent: #b0c4de;
+      --shadow-color: rgba(138, 154, 134, 0.15);
+    }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
-            /* Botanical Vine Side Rails */
-            background-image: linear-gradient(90deg, #EFE9DF 0%, transparent 5%, transparent 95%, #EFE9DF 100%),
-                              radial-gradient(var(--olive-green) 0.75px, transparent 0.75px);
-            background-size: 100% 100%, 20px 20px;
-            background-attachment: fixed;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-        /* System Status Bar */
-        .system-bar {
-            background: #3B3431;
-            color: #FAF7F2;
-            font-size: 11px;
-            padding: 5px 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            letter-spacing: 0.5px;
-        }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 20px 10px;
+      transition: background-color 0.4s ease;
+    }
 
-        /* Mandatory Identity Modal Gate */
-        #identity-modal {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(59, 52, 49, 0.75);
-            backdrop-filter: blur(5px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
-        .modal-box {
-            background: var(--card-bg);
-            padding: 35px;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 420px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-            border: 2px solid var(--pastel-pink);
-            text-align: center;
-        }
-        .modal-box h3 { color: var(--deep-pink); margin-top: 0; }
-        .form-control {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid var(--border-beige);
-            border-radius: 10px;
-            box-sizing: border-box;
-            font-size: 14px;
-        }
-        .btn-primary {
-            background: var(--olive-green);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 600;
-            width: 100%;
-            margin-top: 10px;
-            transition: 0.2s;
-        }
-        .btn-primary:hover { opacity: 0.9; }
+    .app-container {
+      width: 100%;
+      max-width: 480px;
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 12px 32px var(--shadow-color);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      padding-bottom: 24px;
+    }
 
-        /* Main Container */
-        .container {
-            max-width: 700px;
-            margin: 30px auto;
-            padding: 0 15px;
-        }
+    /* Cover Photo Banner */
+    .cover-container {
+      position: relative;
+      height: 160px;
+      background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+      background-size: cover;
+      background-position: center;
+    }
 
-        /* Profile Header */
-        .profile-card {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 6px 20px rgba(138, 154, 134, 0.15);
-            border: 1px solid var(--border-beige);
-            position: relative;
-        }
-        .profile-pic {
-            width: 110px; height: 110px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid var(--pastel-pink);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-        .profile-name {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--text-color);
-            margin: 10px 0 5px 0;
-        }
-        .ig-handle {
-            display: inline-block;
-            background: var(--baby-blue);
-            color: #3B3431;
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-size: 13px;
-            font-weight: 600;
-            text-decoration: none;
-            margin-bottom: 10px;
-        }
-        .bio-text {
-            font-size: 14px;
-            color: #6B5E57;
-            max-width: 500px;
-            margin: 10px auto;
-            line-height: 1.5;
-        }
+    .edit-btn {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.85);
+      border: none;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      transition: transform 0.2s, background 0.2s;
+    }
 
-        /* Admin Writer Panel Toggle Button */
-        .admin-trigger {
-            background: var(--pastel-pink);
-            color: var(--text-color);
-            border: none;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
+    .edit-btn:hover {
+      transform: scale(1.1);
+      background: #ffffff;
+    }
 
-        /* Admin Dashboard Panel */
-        #admin-panel {
-            display: none;
-            background: #F9F5F0;
-            border: 2px dashed var(--olive-green);
-            padding: 20px;
-            border-radius: 15px;
-            margin-top: 20px;
-            text-align: left;
-        }
-        #admin-panel h4 { color: var(--olive-green); margin-top: 0; }
+    .cover-edit-btn {
+      top: 12px;
+      right: 12px;
+    }
 
-        /* Journal Cards */
-        .journal-card {
-            background: var(--card-bg);
-            padding: 25px;
-            border-radius: 15px;
-            margin-top: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            border: 1px solid var(--border-beige);
-        }
-        .journal-title {
-            color: var(--deep-pink);
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-        .journal-date {
-            font-size: 12px;
-            color: #9C8E85;
-            margin-bottom: 15px;
-        }
-        .journal-body {
-            font-size: 15px;
-            line-height: 1.7;
-            white-space: pre-wrap;
-        }
-        .journal-img {
-            width: 100%;
-            max-height: 400px;
-            object-fit: cover;
-            border-radius: 10px;
-            margin-top: 15px;
-        }
+    /* Profile Avatar */
+    .profile-section {
+      position: relative;
+      text-align: center;
+      margin-top: -50px;
+      padding: 0 20px;
+    }
 
-        /* Comments Section */
-        .comments-section {
-            margin-top: 20px;
-            border-top: 1px solid var(--border-beige);
-            padding-top: 15px;
-        }
-        .comment-item {
-            background: #FAF7F2;
-            padding: 10px 15px;
-            border-radius: 10px;
-            margin: 8px 0;
-            font-size: 13px;
-        }
-        .gender-badge {
-            font-size: 10px;
-            background: var(--baby-blue);
-            padding: 2px 6px;
-            border-radius: 4px;
-            margin-left: 6px;
-            color: #3B3431;
-        }
+    .avatar-wrapper {
+      position: relative;
+      display: inline-block;
+    }
 
-        /* Interactive Quiz Card */
-        .quiz-card {
-            background: var(--card-bg);
-            padding: 25px;
-            border-radius: 15px;
-            margin-top: 25px;
-            border: 1px solid var(--border-beige);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-        }
-        .quiz-option {
-            background: #FAF7F2;
-            border: 1px solid var(--border-beige);
-            padding: 12px;
-            margin: 8px 0;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: 0.2s;
-            font-size: 14px;
-        }
-        .quiz-option:hover {
-            background: var(--pastel-pink);
-        }
-    </style>
+    .avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 4px solid #ffffff;
+      object-fit: cover;
+      background: var(--light-accent);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .avatar-edit-btn {
+      bottom: 6px;
+      right: 2px;
+    }
+
+    .user-name {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      color: var(--text-color);
+    }
+
+    .name-edit-icon {
+      font-size: 0.9rem;
+      cursor: pointer;
+      opacity: 0.6;
+    }
+
+    .name-edit-icon:hover {
+      opacity: 1;
+    }
+
+    .bio-text {
+      font-size: 0.88rem;
+      color: var(--text-color);
+      opacity: 0.8;
+      margin-top: 4px;
+    }
+
+    /* Controls Bar (Theme & Admin) */
+    .controls-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px 8px;
+    }
+
+    .pill-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--primary-color);
+      color: var(--text-color);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .pill-btn:hover {
+      background: var(--primary-color);
+      color: #ffffff;
+    }
+
+    /* Theme Modal & Palette */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: #ffffff;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 360px;
+      padding: 20px;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.2);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .modal-header h3 {
+      font-size: 1.1rem;
+      color: var(--text-color);
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: var(--text-color);
+    }
+
+    .palette-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .palette-card {
+      border: 1px solid #eee;
+      border-radius: 12px;
+      padding: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.2s;
+    }
+
+    .palette-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .color-swatch-group {
+      display: flex;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .swatch {
+      width: 14px;
+      height: 14px;
+    }
+
+    .color-picker-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 12px;
+      font-size: 0.88rem;
+    }
+
+    input[type="color"] {
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    /* Hidden inputs */
+    input[type="file"] {
+      display: none;
+    }
+  </style>
 </head>
-<body onload="initApp()">
+<body>
 
-    <!-- Secure System Status Bar -->
-    <div class="system-bar">
-        <span>🔒 SECURE IT SANDBOX | ENCRYPTED CLIENT ENVIRONMENT</span>
-        <span id="session-identity">Guest: Not Verified</span>
+  <div class="app-container">
+    <!-- Cover Banner -->
+    <div class="cover-container" id="coverBanner">
+      <button class="edit-btn cover-edit-btn" onclick="triggerFileInput('coverInput')" title="Change Cover Photo">✏️</button>
+      <input type="file" id="coverInput" accept="image/*" onchange="handleCoverUpload(event)">
     </div>
 
-    <!-- Mandatory Identity Gate Modal -->
-    <div id="identity-modal">
-        <div class="modal-box">
-            <h3>✨ Welcome to Monique’s Sanctuary ✝️</h3>
-            <p style="font-size: 13px; color: #6B5E57; font-style: italic;">
-                “Welcome to Monique’s journal where she can play and write her thoughts. I hope you’ll like it. -God.”
-            </p>
-            <hr style="border:0; border-top:1px solid var(--border-beige); margin: 15px 0;">
-            <p style="font-size: 13px; font-weight: bold; text-align: left;">Please verify your identity to enter:</p>
-            <input type="text" id="visitor-name" class="form-control" placeholder="Enter your preferred name...">
-            <select id="visitor-gender" class="form-control">
-                <option value="" disabled selected>Select your gender...</option>
-                <option value="Female">Female</option>
-                <option value="Male">Male</option>
-                <option value="Prefer not to say">Prefer not to say</option>
-            </select>
-            <button class="btn-primary" onclick="verifyIdentity()">Enter Sanctuary ✝️</button>
-        </div>
+    <!-- Profile Header -->
+    <div class="profile-section">
+      <div class="avatar-wrapper">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=250" alt="Profile Avatar" class="avatar" id="avatarImg">
+        <button class="edit-btn avatar-edit-btn" onclick="triggerFileInput('avatarInput')" title="Change Profile Picture">✏️</button>
+        <input type="file" id="avatarInput" accept="image/*" onchange="handleAvatarUpload(event)">
+      </div>
+      <div class="user-name">
+        <span id="userNameText">Monique S. Sabornido</span>
+        <span class="name-edit-icon" onclick="editName()" title="Edit Name">✏️</span>
+      </div>
+      <div class="bio-text">Rooted in faith & psychology 🕊️✨</div>
     </div>
 
-    <!-- Main Container -->
-    <div class="container" id="main-app" style="display:none;">
-        
-        <!-- Profile Header Section -->
-        <div class="profile-card">
-            <img id="profile-img-display" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400" alt="Monique" class="profile-pic">
-            <h1 class="profile-name" id="profile-name-display">Monique</h1>
-            <div>
-                <a href="https://instagram.com/mo0.v" target="_blank" class="ig-handle">@mo0.v 📸</a>
-            </div>
-            <p class="bio-text" id="profile-bio-display">
-                A quiet space for my faith, psychology insights, and personal stories. Welcome to my world! ✝️🌸
-            </p>
-            <button class="admin-trigger" onclick="promptAdminLogin()">🔒 Monique's Writer Panel</button>
-
-            <!-- Admin Writer Panel (Locked by Default) -->
-            <div id="admin-panel">
-                <h4>🛠️ Monique's Admin Dashboard (Authenticated)</h4>
-                <p style="font-size: 12px; color: #6B5E57;">Manage profile settings and publish or delete journal entries.</p>
-                
-                <hr style="border:0; border-top:1px solid var(--border-beige); margin: 10px 0;">
-                
-                <strong>Update Profile & Bio:</strong>
-                <input type="text" id="admin-new-pic" class="form-control" placeholder="Profile Image URL">
-                <textarea id="admin-new-bio" class="form-control" rows="2" placeholder="Update your bio..."></textarea>
-                <button class="btn-primary" style="background:var(--deep-pink);" onclick="saveProfileChanges()">Save Profile Updates</button>
-
-                <h5 style="margin: 15px 0 5px 0; color: var(--deep-pink);">✍️ Create New Journal Entry:</h5>
-                <input type="text" id="new-title" class="form-control" placeholder="Journal Title...">
-                <input type="text" id="new-date" class="form-control" placeholder="Date (e.g., October 14, 2026)">
-                <textarea id="new-body" class="form-control" rows="5" placeholder="Write your deep reflection here..."></textarea>
-                <input type="text" id="new-image" class="form-control" placeholder="Optional Image URL...">
-                <button class="btn-primary" onclick="publishNewPost()">Publish Entry</button>
-            </div>
-        </div>
-
-        <!-- Dynamic Journal Feed Container -->
-        <div id="journal-feed"></div>
-
-        <!-- Interactive Quiz & Game Card -->
-        <div class="quiz-card">
-            <h3 style="color: var(--deep-pink); margin-top:0;">🧠 Interactive Bible & Psychology Quiz</h3>
-            <p id="quiz-question" style="font-weight:600; font-size:15px;"></p>
-            <div id="quiz-options-container"></div>
-            <button class="btn-primary" style="background: var(--deep-pink); margin-top: 15px;" onclick="loadNewQuiz()">🎲 Generate Next Question</button>
-        </div>
-
+    <!-- Controls Bar -->
+    <div class="controls-bar">
+      <button class="pill-btn" onclick="openModal('themeModal')">🎨 Customize Theme</button>
+      <button class="pill-btn" id="lockStatusBtn" onclick="toggleLock()">🔒 Passcode Locked</button>
     </div>
+  </div>
 
-    <script>
-        // --- SECURE DATA STORE (LOCALSTORAGE) ---
-        const DEFAULT_PROFILE = {
-            name: "Monique",
-            ig: "@mo0.v",
-            bio: "A quiet space for my faith, psychology insights, and personal stories. Welcome to my world! ✝️🌸",
-            pic: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400"
+  <!-- Theme Selector Modal -->
+  <div class="modal" id="themeModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>🎨 Theme Color Palette</h3>
+        <button class="close-btn" onclick="closeModal('themeModal')">&times;</button>
+      </div>
+
+      <p style="font-size: 0.82rem; opacity: 0.8; margin-bottom: 12px;">Choose a preset or extract colors from your cover picture:</p>
+
+      <div class="palette-grid">
+        <div class="palette-card" onclick="applyPalette('#f4efe6', '#8a9a86', '#d8a7b1', '#b0c4de', '#4a403a')">
+          <div class="color-swatch-group">
+            <div class="swatch" style="background:#f4efe6"></div>
+            <div class="swatch" style="background:#8a9a86"></div>
+            <div class="swatch" style="background:#d8a7b1"></div>
+          </div>
+          <span style="font-size: 0.8rem;">Soft Beige</span>
+        </div>
+
+        <div class="palette-card" onclick="applyPalette('#eef2ed', '#5e7057', '#a3b19b', '#d3decb', '#2c3528')">
+          <div class="color-swatch-group">
+            <div class="swatch" style="background:#eef2ed"></div>
+            <div class="swatch" style="background:#5e7057"></div>
+            <div class="swatch" style="background:#a3b19b"></div>
+          </div>
+          <span style="font-size: 0.8rem;">Olive Garden</span>
+        </div>
+
+        <div class="palette-card" onclick="applyPalette('#f0f4f8', '#7b92a8', '#b8cddc', '#e1e9f0', '#2d3748')">
+          <div class="color-swatch-group">
+            <div class="swatch" style="background:#f0f4f8"></div>
+            <div class="swatch" style="background:#7b92a8"></div>
+            <div class="swatch" style="background:#b8cddc"></div>
+          </div>
+          <span style="font-size: 0.8rem;">Baby Blue</span>
+        </div>
+
+        <div class="palette-card" onclick="applyPalette('#fdf6f0', '#c89696', '#e3c2c2', '#f3e5e5', '#4a3838')">
+          <div class="color-swatch-group">
+            <div class="swatch" style="background:#fdf6f0"></div>
+            <div class="swatch" style="background:#c89696"></div>
+            <div class="swatch" style="background:#e3c2c2"></div>
+          </div>
+          <span style="font-size: 0.8rem;">Rose Pastel</span>
+        </div>
+      </div>
+
+      <div class="color-picker-row">
+        <span>Custom Primary Color:</span>
+        <input type="color" id="primaryColorPicker" value="#8a9a86" onchange="updateCustomColor('--primary-color', this.value)">
+      </div>
+
+      <div class="color-picker-row">
+        <span>Custom Background:</span>
+        <input type="color" id="bgColorPicker" value="#f4efe6" onchange="updateCustomColor('--bg-color', this.value)">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const OWNER_PASSCODE = "1101";
+    let isUnlocked = false;
+
+    // Load saved profile data from LocalStorage
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedName = localStorage.getItem('user_name');
+      const savedAvatar = localStorage.getItem('user_avatar');
+      const savedCover = localStorage.getItem('user_cover');
+      const savedTheme = JSON.parse(localStorage.getItem('user_theme'));
+
+      if (savedName) document.getElementById('userNameText').innerText = savedName;
+      if (savedAvatar) document.getElementById('avatarImg').src = savedAvatar;
+      if (savedCover) document.getElementById('coverBanner').style.backgroundImage = `url(${savedCover})`;
+      if (savedTheme) {
+        applyPalette(savedTheme.bg, savedTheme.primary, savedTheme.accent, savedTheme.light, savedTheme.text, false);
+      }
+    });
+
+    // Passcode Verification Helper
+    function verifyPasscode() {
+      if (isUnlocked) return true;
+      const input = prompt("🔐 Enter Owner Passcode (1101) to make changes:");
+      if (input === OWNER_PASSCODE) {
+        isUnlocked = true;
+        document.getElementById('lockStatusBtn').innerText = "🔓 Owner Unlocked";
+        alert("Passcode verified! You can now edit profile settings.");
+        return true;
+      } else {
+        alert("Incorrect passcode! Only the website owner can edit.");
+        return false;
+      }
+    }
+
+    function toggleLock() {
+      if (isUnlocked) {
+        isUnlocked = false;
+        document.getElementById('lockStatusBtn').innerText = "🔒 Passcode Locked";
+        alert("Locked! Owner access restricted.");
+      } else {
+        verifyPasscode();
+      }
+    }
+
+    // Trigger file dialog
+    function triggerFileInput(id) {
+      if (verifyPasscode()) {
+        document.getElementById(id).click();
+      }
+    }
+
+    // Handle Cover Image Upload
+    function handleCoverUpload(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          const result = event.target.result;
+          document.getElementById('coverBanner').style.backgroundImage = `url(${result})`;
+          localStorage.setItem('user_cover', result);
         };
+        reader.readAsDataURL(file);
+      }
+    }
 
-        const DEFAULT_POSTS = [
-            {
-                id: 1,
-                title: "Reflections on Creation, Truth, and Grace",
-                date: "October 14, 2026",
-                body: `Today, I found myself sitting in quiet awe, reflecting on how majestic God truly is. When I look closely at how everything in our world is formed and held together, I realize that even science—our human process of observing, testing, and applying logic to understand the universe—is simply us exploring what God had already created long before we arrived.\n\nEverything is interconnected. Fields like medicine and psychology exist only because the blueprint was already placed in nature. Take psychology, for instance: it studies human behavior, our emotional processing, and how our childhood experiences shape who we grow up to be. But scientists didn't invent those mental or emotional mechanisms—they are merely discovering the intricate mind, heart, and soul that God engineered into human nature from the very beginning.\n\nThink about human life itself. Biologically, everything starts from just a single cell that rapidly divides and grows to form a brain, a beating heart, blood vessels, the capacity to reason, and an eternal soul and spirit. It’s the same across nature, plants, and animals. Scientists explore what is already here, discover natural laws, and name creatures or phenomena—sometimes even giving them their own names or surnames. Yet, beneath and above this earth, so much remains completely unexplored and unknown to human understanding.\n\nHow could all of this happen by chance? How could all these complex systems exist all at once, reproducing and developing in harmony, without a Greater Creator behind them? I am convinced there is Someone far beyond our finite human understanding—a Creator whose full essence cannot be seen or touched, nor fully captured by human definition. There must be a God who is self-existent, with no beginning and no end:\n\n> "Before the mountains were brought forth, or ever you had formed the earth and the world, from everlasting to everlasting you are God." — Psalm 90:2`,
-                image: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=600",
-                comments: []
-            }
-        ];
+    // Handle Avatar Image Upload
+    function handleAvatarUpload(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          const result = event.target.result;
+          document.getElementById('avatarImg').src = result;
+          localStorage.setItem('user_avatar', result);
+        };
+        reader.readAsDataURL(file);
+      }
+    }
 
-        // --- QUIZ BANK ---
-        const quizBank = [
-            {
-                q: "What is the biological starting point of human development?",
-                options: ["A) A single cell / zygote", "B) Fully formed organ tissue", "C) Nervous system cells"],
-                correct: 0
-            },
-            {
-                q: "Which psychological theory explores human needs like hygiene and motivators in the workplace?",
-                options: ["A) Classical Test Theory", "B) Herzberg's Two-Factor Theory", "C) Cattell-Horn-Carroll Theory"],
-                correct: 1
-            },
-            {
-                q: "According to Genesis 1:1, who created the heavens and the earth?",
-                options: ["A) Nature and chance", "B) God", "C) Cosmic evolution"],
-                correct: 1
-            },
-            {
-                q: "What does the Holy Spirit act as in our spiritual lives according to Scripture?",
-                options: ["A) Living water", "B) A temporary guide", "C) An abstract concept"],
-                correct: 0
-            }
-        ];
-        let currentQuizIndex = 0;
+    // Edit Name Function
+    function editName() {
+      if (!verifyPasscode()) return;
+      const currentName = document.getElementById('userNameText').innerText;
+      const newName = prompt("Enter your display name:", currentName);
+      if (newName && newName.trim() !== "") {
+        document.getElementById('userNameText').innerText = newName.trim();
+        localStorage.setItem('user_name', newName.trim());
+      }
+    }
 
-        // --- INITIALIZATION ---
-        function initApp() {
-            // Check if visitor already verified in session
-            let verifiedUser = sessionStorage.getItem('monique_visitor');
-            if(verifiedUser) {
-                let userObj = JSON.parse(verifiedUser);
-                document.getElementById('session-identity').innerText = `User: ${userObj.name} (${userObj.gender})`;
-                document.getElementById('identity-modal').style.display = 'none';
-                document.getElementById('main-app').style.display = 'block';
-            }
-            loadProfile();
-            renderFeed();
-            loadNewQuiz();
-        }
+    // Modal Helpers
+    function openModal(id) {
+      document.getElementById(id).classList.add('active');
+    }
 
-        function verifyIdentity() {
-            let name = document.getElementById('visitor-name').value.trim();
-            let gender = document.getElementById('visitor-gender').value;
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('active');
+    }
 
-            if(!name || !gender) {
-                alert("Security Error: Please provide both your preferred name and gender to enter.");
-                return;
-            }
+    // Palette Application
+    function applyPalette(bg, primary, accent, light, text, save = true) {
+      document.documentElement.style.setProperty('--bg-color', bg);
+      document.documentElement.style.setProperty('--primary-color', primary);
+      document.documentElement.style.setProperty('--accent-color', accent);
+      document.documentElement.style.setProperty('--light-accent', light);
+      document.documentElement.style.setProperty('--text-color', text);
 
-            let userData = { name: name, gender: gender };
-            sessionStorage.setItem('monique_visitor', JSON.stringify(userData));
-            
-            document.getElementById('session-identity').innerText = `User: ${name} (${gender})`;
-            document.getElementById('identity-modal').style.display = 'none';
-            document.getElementById('main-app').style.display = 'block';
-        }
+      if (save) {
+        const themeObj = { bg, primary, accent, light, text };
+        localStorage.setItem('user_theme', JSON.stringify(themeObj));
+      }
+    }
 
-        // --- PROFILE FUNCTIONS ---
-        function loadProfile() {
-            let profile = JSON.parse(localStorage.getItem('monique_profile')) || DEFAULT_PROFILE;
-            document.getElementById('profile-name-display').innerText = profile.name;
-            document.getElementById('profile-bio-display').innerText = profile.bio;
-            document.getElementById('profile-img-display').src = profile.pic;
-            
-            document.getElementById('admin-new-pic').value = profile.pic;
-            document.getElementById('admin-new-bio').value = profile.bio;
-        }
-
-        function promptAdminLogin() {
-            let pin = prompt("Enter Monique's Writer Passcode:");
-            if (pin === "1101") {
-                document.getElementById('admin-panel').style.display = 'block';
-                alert("Access Granted: Writer Panel Unlocked.");
-            } else if (pin !== null) {
-                alert("Access Denied: Incorrect Passcode.");
-            }
-        }
-
-        function saveProfileChanges() {
-            let newPic = document.getElementById('admin-new-pic').value.trim();
-            let newBio = document.getElementById('admin-new-bio').value.trim();
-            
-            let profile = JSON.parse(localStorage.getItem('monique_profile')) || DEFAULT_PROFILE;
-            if(newPic) profile.pic = newPic;
-            if(newBio) profile.bio = newBio;
-
-            localStorage.setItem('monique_profile', JSON.stringify(profile));
-            loadProfile();
-            alert("Profile successfully updated!");
-        }
-
-        // --- POST MANAGEMENT (CRUD) ---
-        function getPosts() {
-            let posts = localStorage.getItem('monique_posts');
-            return posts ? JSON.parse(posts) : DEFAULT_POSTS;
-        }
-
-        function savePosts(posts) {
-            localStorage.setItem('monique_posts', JSON.stringify(posts));
-        }
-
-        function publishNewPost() {
-            let title = document.getElementById('new-title').value.trim();
-            let date = document.getElementById('new-date').value.trim();
-            let body = document.getElementById('new-body').value.trim();
-            let image = document.getElementById('new-image').value.trim();
-
-            if(!title || !body) {
-                alert("Title and Body are required to publish an entry.");
-                return;
-            }
-
-            let posts = getPosts();
-            let newEntry = {
-                id: Date.now(),
-                title: title,
-                date: date || "Today",
-                body: body,
-                image: image,
-                comments: []
-            };
-
-            posts.unshift(newEntry);
-            savePosts(posts);
-            renderFeed();
-
-            document.getElementById('new-title').value = "";
-            document.getElementById('new-date').value = "";
-            document.getElementById('new-body').value = "";
-            document.getElementById('new-image').value = "";
-            alert("Journal entry successfully published.");
-        }
-
-        function deletePost(id) {
-            if(confirm("Are you sure you want to permanently delete this journal entry?")) {
-                let posts = getPosts();
-                posts = posts.filter(p => p.id !== id);
-                savePosts(posts);
-                renderFeed();
-            }
-        }
-
-        function renderFeed() {
-            let feedContainer = document.getElementById('journal-feed');
-            let posts = getPosts();
-            let html = "";
-
-            posts.forEach(post => {
-                let commentsHtml = "";
-                if(post.comments && post.comments.length > 0) {
-                    post.comments.forEach(c => {
-                        commentsHtml += `<div class="comment-item"><b>${escapeHtml(c.name)}</b><span class="gender-badge">${escapeHtml(c.gender)}</span>: <i>"${escapeHtml(c.text)}"</i></div>`;
-                    });
-                } else {
-                    commentsHtml = `<p style="font-size:12px; color:#9C8E85; font-style:italic;">No comments yet. Be the first to share your thoughts!</p>`;
-                }
-
-                html += `
-                    <div class="journal-card">
-                        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-                            <div>
-                                <div class="journal-title">${escapeHtml(post.title)}</div>
-                                <div class="journal-date">${escapeHtml(post.date)}</div>
-                            </div>
-                            <button onclick="deletePost(${post.id})" style="background:#ffdddd; border:none; color:red; padding:4px 8px; border-radius:5px; cursor:pointer; font-size:11px;">🗑️ Delete</button>
-                        </div>
-                        <div class="journal-body">${escapeHtml(post.body)}</div>
-                        ${post.image ? `<img src="${escapeHtml(post.image)}" class="journal-img" alt="Journal attachment">` : ''}
-                        
-                        <div class="comments-section">
-                            <h4 style="font-size: 14px; color: var(--deep-pink); margin-bottom: 8px;">💬 Reader Thoughts & Comments</h4>
-                            <div id="comments-list-${post.id}">
-                                ${commentsHtml}
-                            </div>
-                            <div style="margin-top: 10px; display:flex; gap:8px;">
-                                <input type="text" id="comment-input-${post.id}" class="form-control" placeholder="Leave a reflection..." style="margin:0;">
-                                <button class="btn-primary" style="width: auto; padding: 0 15px; margin:0;" onclick="submitComment(${post.id})">Post</button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-
-            feedContainer.innerHTML = html;
-        }
-
-        function submitComment(postId) {
-            let input = document.getElementById(`comment-input-${postId}`);
-            let text = input.value.trim();
-            if(!text) return;
-
-            let visitor = JSON.parse(sessionStorage.getItem('monique_visitor')) || { name: "Anonymous", gender: "Not specified" };
-
-            let posts = getPosts();
-            let post = posts.find(p => p.id === postId);
-            if(post) {
-                if(!post.comments) post.comments = [];
-                post.comments.push({
-                    name: visitor.name,
-                    gender: visitor.gender,
-                    text: text
-                });
-                savePosts(posts);
-                renderFeed();
-            }
-        }
-
-        // --- DYNAMIC QUIZ ENGINE ---
-        function loadNewQuiz() {
-            let qData = quizBank[currentQuizIndex];
-            document.getElementById('quiz-question').innerText = qData.q;
-            
-            let optionsHtml = "";
-            qData.options.forEach((opt, idx) => {
-                optionsHtml += `<div class="quiz-option" onclick="handleQuizAnswer(${idx}, ${qData.correct})">${opt}</div>`;
-            });
-            document.getElementById('quiz-options-container').innerHTML = optionsHtml;
-
-            currentQuizIndex = (currentQuizIndex + 1) % quizBank.length;
-        }
-
-        function handleQuizAnswer(selected, correct) {
-            if(selected === correct) {
-                alert("Correct! 🎉 Excellent reasoning.");
-            } else {
-                alert("Incorrect, but keep exploring and learning!");
-            }
-            loadNewQuiz();
-        }
-
-        function escapeHtml(text) {
-            if(!text) return "";
-            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        }
-    </script>
+    function updateCustomColor(cssVar, colorValue) {
+      document.documentElement.style.setProperty(cssVar, colorValue);
+    }
+  </script>
 </body>
 </html>
